@@ -44,26 +44,43 @@ def earliest_ancestor(ancestors, starting_node):
     Loop until nodeToCheck is empty and all the possible paths have been
     taken. Every loop remove the last node from the list. Loop through the
     current node's parents, add their current score to their child's 
-    score plus one and add them to the list. For every parent turn it into a node and grab it's grandparents
+    score plus one and add them to the list. For every parent check if it 
+    has parents and compare to highest score. If the parent has a higher 
+    score make it the highest score node and update it's value. If the 
+    scores are equal pick the one with the lower value. 4 and 11 have the 
+    same score but choose 4.
     """
     nodeToCheck = [starting_node]
     highestScore = {"node": "", "value": 0}
     while len(nodeToCheck) > 0:
-        print('nodeToCheck: ', nodeToCheck)
+        # In case the node has no parents
+        if nodeToCheck[-1] not in ancestorsReverse:
+            return -1
         node = ancestorsReverse[nodeToCheck.pop(-1)]
-        print('node: ', node)
+
         for parent in node["parent"]:
+
             if parent not in ancestorsReverse:
+
                 if node["score"] + 1 > highestScore["value"]:
                     highestScore["node"] = parent
+                    highestScore["value"] = node["score"] + 1
+                if node["score"] + 1 == highestScore["value"] and parent < highestScore["node"]:
+                    highestScore["node"] = parent
+                    highestScore["value"] = node["score"] + 1
+
                 continue
+
             parentNode = ancestorsReverse[parent]
             parentNode["score"] += 1 + node["score"]
-            # for grandparent in parentNode:
-            #     if grandparent not in ancestorsReverse and parentNode["score"] + 1 > highestScore["value"]:
-            #         highestScore["node"] = parentNode["parent"]
             nodeToCheck.append(parent)
+
+    # Return node with the highest score
     return highestScore["node"]
 
-print(earliest_ancestor(exampleInput, 6))
+# print(earliest_ancestor(exampleInput, 6))
+# print(earliest_ancestor(exampleInput, 2))
+# print(earliest_ancestor(exampleInput, 4))
+# print(earliest_ancestor(exampleInput, 1))
+# print(earliest_ancestor(exampleInput, 8))
 
