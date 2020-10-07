@@ -14,21 +14,6 @@ mapOfInput = {
 exampleInput = [[1, 3], [2, 3], [3, 6], [4, 5], [4, 8], [5, 6], [5, 7], [8, 9], [10, 1], [11, 8]]
 def earliest_ancestor(ancestors, starting_node):
     ancestorsReverse = {}
-    # for node in ancestors:
-    #     if "child" in tree[node[0]]:
-    #         tree[node[0]]["child"].append(node[1])
-    #     else:
-    #         tree[node[0]]["child"] = node[1]
-    #     if "parent" in tree[node[1]]:
-    #         tree[node[0]]["parent"].append(node[0])
-    #     else:
-    #         tree[node[1]]["parent"] = node[0]
-    # node = tree[starting_node]
-    # stackToCheck = [node]
-    # while len(stackToCheck) > 0:
-    #     node = stackToCheck.pop(-1)
-    #     for parent in stackToCheck[node]["parent"]:
-    #         stackToCheck.append(parent)
     """
     Take every node in ancestors and store it's first index as 
     a value in a list and the second index as the key. If the second 
@@ -78,9 +63,9 @@ def earliest_ancestor(ancestors, starting_node):
     # Return node with the highest score
     return highestScore["node"]
 
-# print(earliest_ancestor(exampleInput, 6))
-# print(earliest_ancestor(exampleInput, 2))
-# print(earliest_ancestor(exampleInput, 4))
-# print(earliest_ancestor(exampleInput, 1))
-# print(earliest_ancestor(exampleInput, 8))
+print(earliest_ancestor(exampleInput, 6))
+print(earliest_ancestor(exampleInput, 2))
+print(earliest_ancestor(exampleInput, 4))
+print(earliest_ancestor(exampleInput, 1))
+print(earliest_ancestor(exampleInput, 8))
 
