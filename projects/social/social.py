@@ -47,17 +47,24 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-        for i in range(num_users):
+        for i in range(num_users): # O(n)
             self.add_user(i)
 
         # Create friendships
-        for user in self.users:
-            numFriends = random.randint(1, avg_friendships * 2)
+        """
+        Create a random number of friends to make for every user. Make sure
+        the chosen number of friends is not greater than the total number of friends
+
+        """
+        for user in self.users: # O(n)
+            numFriends = random.randint(0, avg_friendships)
             i = 1
-            while i <= numFriends:
+            while i <= numFriends: # O(m)
+                if len(self.friendships[user]) >= len(self.users):
+                    break
                 randomFriend = user
                 while randomFriend == user or randomFriend in self.friendships[user]:
-                    randomFriend = random.randint(1, len(self.users.keys()))
+                    randomFriend = random.randint(1, len(self.users))
                 self.add_friendship(user, randomFriend)
                 i += 1
 
@@ -82,7 +89,6 @@ class SocialGraph:
         """
         for path in queue:
             curUser = path[-1]
-            print('path: ', path)
             for friend in self.friendships[curUser]:
                 if friend not in visited:
                     visited[friend] = path + [friend]
@@ -95,5 +101,9 @@ if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
     print("\nFriendships: ", sg.friendships)
+    accu = 0
+    for key in sg.friendships:
+        accu += len(sg.friendships[key])
+    print(accu / 10)
     connections = sg.get_all_social_paths(1)
     print("\nConnections: ", connections)
