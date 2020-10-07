@@ -1,3 +1,5 @@
+import random
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -45,8 +47,19 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
+        for i in range(num_users):
+            self.add_user(i)
 
         # Create friendships
+        for user in self.users:
+            numFriends = random.randint(1, avg_friendships * 2)
+            i = 1
+            while i <= numFriends:
+                randomFriend = user
+                while randomFriend == user or randomFriend in self.friendships[user]:
+                    randomFriend = random.randint(1, len(self.users.keys()))
+                self.add_friendship(user, randomFriend)
+                i += 1
 
     def get_all_social_paths(self, user_id):
         """
@@ -59,12 +72,28 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        # stack = [[user_id]]
+        """
+        Remove the current user from the stack, add every friend of current user to the stack, and add the path to get to the current user to the visited dict.
+        """
+        queue = [[user_id]]
+        """
+        Get the current user from the end of the current path, add every friend of current user to the queue and add key = friend and value = path to the visited dictionary.
+        """
+        for path in queue:
+            curUser = path[-1]
+            print('path: ', path)
+            for friend in self.friendships[curUser]:
+                if friend not in visited:
+                    visited[friend] = path + [friend]
+                    queue.append(path + [friend])
+
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
-    print(sg.friendships)
+    print("\nFriendships: ", sg.friendships)
     connections = sg.get_all_social_paths(1)
-    print(connections)
+    print("\nConnections: ", connections)
