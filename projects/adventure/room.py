@@ -55,5 +55,7 @@ class Room:
             return self.w_to
         else:
             return None
+    def get_id(self):
+        return self.id
     def get_coords(self):
         return [self.x, self.y]
