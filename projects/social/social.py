@@ -79,10 +79,6 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
-        # stack = [[user_id]]
-        """
-        Remove the current user from the stack, add every friend of current user to the stack, and add the path to get to the current user to the visited dict.
-        """
         queue = [[user_id]]
         """
         Get the current user from the end of the current path, add every friend of current user to the queue and add key = friend and value = path to the visited dictionary.
